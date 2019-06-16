@@ -29,7 +29,7 @@ class Vocabulary(object):
         return table
 
     def kmer_to_idx(self, kmer:str) -> int:
-        assert kmer in self.table
+        assert kmer in self.table, kmer + " not in vocabular."
         return self.table.searchsorted(kmer)
 
     def idx_to_kmer(self, idx:int) -> str:

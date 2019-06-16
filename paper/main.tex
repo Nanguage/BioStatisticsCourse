@@ -1,8 +1,14 @@
-\documentclass{article}
-\title{}
-\author{Weize Xu}
+\documentclass[UTF8]{ctexart}
 
-\usepackage{biblatex}
+\title{生物统计课程论文}
+\author{徐伟泽\\2018302110174\\预防兽医学，动物医学院\\华中农业大学}
+
+\usepackage[%
+backend=biber,
+autocite=superscript,
+sorting=none,
+style=numeric,
+]{biblatex}
 \addbibresource{ref.bib}
 
 \usepackage{graphicx}
@@ -17,11 +23,73 @@
 \begin{document}
   \maketitle
 
-  \section{Task 1: Classification}
-  
+  \textbf{摘要}：
+  本文探讨了几种机器学习模型在DNA序列分类与回归问题
+  上的应用，结合具体的数据集对几种模型的相应问题上的表现进行了
+  评估。其中分类问题数据来自于 DAP-Seq 数据得到的
+  转录因子结合位点序列数据，回归数据来自于 CRISPR-Cas9 敲除实验
+  对癌细胞生长影响数据。通过比较各种方法应用在相应数据上得到的结果，
+  讨论了机器学习模型在核酸序列数据的应用方法以及存在的问题。
 
+  \section{前言}
+  目前机器学习、统计学习方法已经被广泛应用于处理DNA序列与基因组学相关实验数据
+  的分类与回归问题。
+
+  \section{材料与方法}
+  \subsection{数据}
+  \subsubsection{分类问题}
+  分类问题数据来自于2016年发表于 Nature Biotechnology 的 DAP-Seq 数据\autocite{o2016cistrome}。
+  数据包括正样本与负样本共5834条长度为201bp的 DNA 序列。
+  其中正样本为实验得出的TF（Transcription Factor，译：转录因子）结合位点附近的DNA序列，负样本为
+  染色体上随机抽取的相等长度的序列。
+
+  \subsubsection{回归问题}
+  回归问题的数据集来自于CRISPR-Cas9 敲除 p53 enhancer 筛选实验\autocite{korkmaz2016functional}。
+  预测的根据为敲除位点附近的核酸序列，预测目标为敲除后癌细胞生长的 Enrichment Z-Score。
+
+  \subsection{序列特征提取}
+  \subsubsection{k-mer计数}
+  k-mer 计数是一种常用的较为朴素的序列特征提取方法。k-mer 指的是
+  序列中长度为 k 的子序列，当序列为DNA时，所有可能的 k-mer 种类
+  数量为 $4^k$，所以k-mer 计数特征可表示为一个长度为 $4^k$ 的
+  向量 $F_k(s) = [c_1, ... c_i, ... c_{4_k}] $ 其中 $c_i$ 为第 $i$
+  个 k-mer 再序列 $s$ 中出现的次数。 对于 k-mer 计数特征，k 是唯一的参数，
+  在之前的研究中一般将 k 设置为 6 左右\autocite{ghandi2014enhanced,zeng2018prediction}。
+
+  \subsubsection{k-mer sentence 与 Seq2Vec}
+  除了将 k-mer 计数作为序列特征，之前的研究中还有研究者借鉴自然语言
+  处理中的方法，将序列视为由 k-mer 作为词的句子。然后将句子嵌入到
+  欧式空间中，将嵌入后得到的向量作为特征\autocite{zeng2018prediction}。
+
+  \subsubsection{Recurrent Neural Network}
+  既然将DNA序列特征提取能够类比于自然语言序列的特征提取，那么可以进一步
+  的借鉴自然语言处理中的其他技术来进行DNA序列特征提取。
+  比如使用 RNN (Recurrent Neural Network, 译：递归神经网络)
+  或者 LSTM (Long Short-Term Memory)\autocite{hochreiter1997long}、
+  GRU（Gated Recurrent Unit）\autocite{cho2014learning}
+  等基于神经网络的技术来做特征提取。当然之前已经有研究者使用
+  这类技术提取特征用于 TF 结合位点预测\autocite{shen2018recurrent}。
+
+  \subsection{分类模型}
+  \subsubsection{Support Vector Machine}
+  \subsubsection{Random Forest}
+
+  \subsection{回归模型}
+  \subsubsection{Linear Regression}
+  \subsubsection{Lasso 与 Ridge regression}
+  \subsubsection{Gradient Boosting Regression Tree}
+
+  \subsection{结果评价}
+  \subsubsection{分类结果评价}
+  \subsubsection{回归结果评价}
+  \subsubsection{交叉检验}
+
+  \section{结果}
+  \subsection{分类问题}
+  \subsection{回归问题}
+
+  \section{讨论}
  
-
   \printbibliography
 
 \end{document}
